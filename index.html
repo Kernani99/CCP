@@ -57,7 +57,7 @@
         }
         
         .logo img {
-            height: 70px; /* زيادة حجم الشعار */
+            height: 70px;
             width: auto;
         }
         
@@ -223,7 +223,7 @@
             }
             
             .logo img {
-                height: 60px; /* تعديل حجم الشعار للجوال */
+                height: 60px;
             }
             
             .converter-card {
@@ -356,11 +356,19 @@
             } else {
                 x = 97 - x;
             }
-            ripKeyInput.value = x.toString().padStart(2, '0');
+            const ripKey = x.toString().padStart(2, '0');
+            ripKeyInput.value = ripKey;
             
-            // عرض الرقم RIP الكامل
-            const r = str.padEnd(11, '0') + x.toString().padStart(2, '0');
-            const fullRip = "0079999" + r;
+            // إنشاء الرقم RIP الكامل (20 رقمًا)
+            const ccpPart = str.padStart(10, '0'); // إضافة أصفار لجعل طول الجزء 10 أرقام
+            const fullRip = "00799999" + ccpPart + ripKey;
+            
+            // التحقق من أن الطول 20 رقمًا
+            if (fullRip.length !== 20) {
+                fullRipElement.textContent = 'خطأ في توليد الرقم RIP';
+                return;
+            }
+            
             fullRipElement.textContent = fullRip;
             
             // تفعيل زر النسخ
